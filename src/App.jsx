@@ -19,6 +19,10 @@ import Ratangad from './components/Ratangad';
 import Vasota from './components/Vasota';
 import Rajmachi from './components/Rajmachi';
 import BookNow from './components/BookNow';
+import Privacy from './components/Privacy';
+import AIItinerary from './components/AIItinerary';
+import Dashboard from './components/Dashboard';
+import ProtectedRoute from './components/ProtectedRoute';
 
 const App = () => {
   return (
@@ -26,7 +30,18 @@ const App = () => {
       <Routes>
         <Route path="/"element={<Home />}/>
         <Route path="/Login" element={<Login />} />
+        <Route path="/Privacy" element={<Privacy />} />
         <Route path="/Explore" element={<Explore />} />
+        <Route path="/Dashboard" element={
+          <ProtectedRoute>
+            <Dashboard />
+          </ProtectedRoute>
+        } />
+        <Route path="/AIItinerary" element={
+          <ProtectedRoute>
+            <AIItinerary />
+          </ProtectedRoute>
+        } />
         <Route path="/Alibaug" element={<Alibaug />} />
         <Route path="/Bhandardara" element={<Bhandardara />} />
         <Route path="/Kolad" element={<Kolad />} />

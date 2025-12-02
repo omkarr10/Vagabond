@@ -63,6 +63,9 @@ const Explore = () => {
 
       <div style={{ textAlign: 'center' }}>
         <br />
+        <Link to="/AIItinerary" className={styles.btn} style={{ marginRight: '10px' }}>
+          🤖 AI Trip Planner
+        </Link>
         <button className={styles.btn} onClick={() => setFilterTag('all')}>Show All</button>
         <button className={styles.btn} onClick={() => setFilterTag('camp')}>Camps</button>
         <button className={styles.btn} onClick={() => setFilterTag('trek')}>Treks</button>

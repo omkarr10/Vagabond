@@ -1,6 +1,8 @@
 import React, { useState } from "react";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate,Link } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 import styles from "../assets/css/Login.module.css";
+import "../components/Privacy";
 
 const Login = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -9,6 +11,7 @@ const Login = () => {
   const [message, setMessage] = useState("");
   const [msgColor, setMsgColor] = useState("red");
   const navigate = useNavigate();
+  const { login, register } = useAuth();
 
   return (
     <div className={styles.hero}>
@@ -38,22 +41,15 @@ const Login = () => {
             const username = e.target[0].value;
             const password = e.target[1].value;
 
-            const res = await fetch("http://localhost:5000/api/auth/login", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ username, password }),
-            });
+            const result = await login(username, password);
 
-            const data = await res.json();
-
-            if (res.ok) {
-              localStorage.setItem("user", JSON.stringify(data.user));
+            if (result.success) {
               setMsgColor("black");
               setMessage("Login Successful ✅");
               setTimeout(() => navigate("/explore"), 1000);
             } else {
               setMsgColor("black");
-              setMessage("Username Not Recognized ❌");
+              setMessage(result.message || "Login Failed ❌");
             }
             }}
           >
@@ -73,7 +69,8 @@ const Login = () => {
               <input
                 type={showPassLogin ? "text" : "password"}
                 className={styles["input-field"]}
-                placeholder="Enter Password"
+                placeholder="Enter Password" 
+                minLength={8}
                 required
                 autoComplete="current-password"
               />
@@ -88,31 +85,25 @@ const Login = () => {
           <form
             className={styles["input-group"]}
             style={{ left: isLogin ? "450px" : "50px" }}
-          onSubmit={async (e) => {
-            e.preventDefault();
-            setMessage("");
+            onSubmit={async (e) => {
+              e.preventDefault();
+              setMessage("");
 
-            const username = e.target[0].value;
-            const email = e.target[1].value;
-            const password = e.target[2].value;
+              const username = e.target[0].value;
+              const email = e.target[1].value;
+              const password = e.target[2].value;
 
-            const res = await fetch("http://localhost:5000/api/auth/register", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ username, email, password }),
-            });
+              const result = await register(username, email, password);
 
-            const data = await res.json();
-
-          if (res.ok) {
-              setMsgColor("green");
-              setMessage("Registration successful ✅");
-              setIsLogin(true);
-            } else {
-              setMsgColor("red");
-              setMessage(` ${data.msg}❌`);
-            }
-          }}
+              if (result.success) {
+                setMsgColor("green");
+                setMessage("Registration successful ✅");
+                setTimeout(() => navigate("/explore"), 1000);
+              } else {
+                setMsgColor("red");
+                setMessage(`${result.message} ❌`);
+              }
+            }}
           >
             <div className={styles["social-icons"]}>
               <a href="https://facebook.com"><img src="/home/fb.webp" alt="Facebook" /></a>
@@ -138,14 +129,17 @@ const Login = () => {
                 type={showPassRegister ? "text" : "password"}
                 className={styles["input-field"]}
                 placeholder="Enter Password"
+                minLength={8}
                 required
                 autoComplete="new-password"
               />
               <div className={styles["checkbox-container"]}>
                 <input type="checkbox" className={styles["check-box"]} required />
-                <a href="/privacy"><span className={styles.policyText}>I agree to the privacy policy</span></a>
+                <Link to="/Privacy">
+                  <span className={styles.policyText}>I agree to the privacy policy</span>
+                </Link>
               </div>
-		{message && <p style={{ marginTop: "10px", color: msgColor }}>{message}</p>}       
+              {message && <p style={{ marginTop: "10px", color: msgColor }}>{message}</p>}
               <button type="submit" className={styles["submit-btn"]}>Register</button>
             </div>
           </form>

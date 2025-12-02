@@ -1,11 +1,13 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-require('dotenv').config();
+const path = require('path');
+require('dotenv').config({ path: path.join(__dirname, '..', '.env') });
 
 const authRoutes = require('./routes/auth');
 const contactRoutes = require('./routes/contact'); 
 const bookingRoutes = require('./routes/booking');
+const itineraryRoutes = require('./routes/itinerary');
 
 const app = express();
 
@@ -25,6 +27,7 @@ mongoose.connect(process.env.MONGO_URI)
 app.use('/api/auth', authRoutes);
 app.use('/api/contact', contactRoutes); 
 app.use('/api/bookings', bookingRoutes);
+app.use('/api/itinerary', itineraryRoutes);
 
 // Root route (optional)
 app.get("/", (req, res) => {

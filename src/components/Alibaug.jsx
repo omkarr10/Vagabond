@@ -120,6 +120,17 @@ const Alibaug = () => {
         </div>
       </motion.section>
 
+      {modalImg && (
+        <div className="modal d-flex align-items-center justify-content-center" onClick={() => setModalImg(null)} style={{
+          position: "fixed", top: 0, left: 0, width: "100%", height: "100%",
+          background: "rgba(0,0,0,0.8)", zIndex: 9999
+        }}>
+          <div className="position-relative">
+            <img src={modalImg} alt="modal" className="img-fluid rounded" style={{ maxHeight: "90vh" }} />
+          </div>
+        </div>
+      )}
+
       {/* Experience */}
       <section className="container-xxl py-5 px-0">
         <div className="row g-0">
