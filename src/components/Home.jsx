@@ -121,16 +121,6 @@ export default function Home() {
                 </a>
               </li>
             ))}
-            <li>
-              <Link to="/AIItinerary" className={styles["menu-btn"]}>
-                🤖 AI Planner
-              </Link>
-            </li>
-            <li>
-              <Link to="/Login" className={styles["menu-btn"]}>
-                Login
-              </Link>
-            </li>
           </ul>
           <div
             className={styles["menu-btn"]}
@@ -153,14 +143,7 @@ export default function Home() {
             <div className={styles["text-3"]}>
               We provide <span className={styles.typing}>{typingText}</span>
             </div>
-            <div style={{ display: 'flex', gap: '15px', marginTop: '20px' }}>
-              <Link to="/login" style={{ padding: '12px 30px', background: '#ff6b35', color: 'white', borderRadius: '6px', textDecoration: 'none', fontWeight: '500' }}>
-                View Campgrounds
-              </Link>
-              <Link to="/AIItinerary" style={{ padding: '12px 30px', background: '#4CAF50', color: 'white', borderRadius: '6px', textDecoration: 'none', fontWeight: '500' }}>
-                🤖 AI Trip Planner
-              </Link>
-            </div>
+            <Link to="/login">View Campgrounds</Link>
           </div>
         </div>
       </section>
